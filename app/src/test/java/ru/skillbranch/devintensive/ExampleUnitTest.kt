@@ -54,4 +54,25 @@ class ExampleUnitTest {
         println(Date().add(-400, TimeUnits.DAY).humanizeDiff()) //более года назад
         println(Date().add(400, TimeUnits.DAY).humanizeDiff()) //более чем через год
     }
+
+    @Test
+    fun test_translit(){
+        println(Utils.transliteration("Женя Стереотипов")) //Zhenya Stereotipov
+        println(Utils.transliteration("Amazing Петр","_")) //Amazing_Petr
+    }
+
+    @Test
+    fun test_builder(){
+        val user = User.Builder().id("s")
+            .firstName("s")
+            .lastName("s")
+            .avatar("s")
+            .rating(1)
+            .respect(2)
+            .lastVisit(Date())
+            .isOnline(true)
+            .build()
+
+        println(user)
+    }
 }
