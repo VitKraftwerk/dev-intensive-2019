@@ -56,6 +56,14 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun test_plural() {
+        println(TimeUnits.SECOND.plural(1)) //1 секунду
+        println(TimeUnits.MINUTE.plural(4)) //4 минуты
+        println(TimeUnits.HOUR.plural(19))//19 часов
+        println(TimeUnits.DAY.plural(222)) //222 дня
+    }
+
+    @Test
     fun test_translit(){
         println(Utils.transliteration("Женя Стереотипов")) //Zhenya Stereotipov
         println(Utils.transliteration("Amazing Петр","_")) //Amazing_Petr

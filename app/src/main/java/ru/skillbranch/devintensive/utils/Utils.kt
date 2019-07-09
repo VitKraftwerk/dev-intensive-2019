@@ -4,12 +4,11 @@ object Utils {
     private fun checkNull(str: String?): String?{
         return if(str.isNullOrBlank()) null else str
     }
+
     private fun checkEmpty(str: String?): String{
         return if (str != null) str else ""
     }
-//    private fun getInitial(str: String?): String{
-//        return str?.
-//    }
+
     fun parseFullName(fullName: String?): Pair<String?, String?>{
         val parts: List<String>? = fullName?.split(" ")
 
