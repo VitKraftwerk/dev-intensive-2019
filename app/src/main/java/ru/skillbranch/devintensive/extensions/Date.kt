@@ -12,12 +12,13 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value: Int): String{
+        return "$value " + getWord(value.toLong(), this)
+    }
 }
 
-fun TimeUnits.plural(value: Int): String{
-    return "$value " + getWord(value.toLong(), this)
-}
 
 fun TimeUnits.plural(value: Long): String{
     return "$value " + getWord(value, this)
