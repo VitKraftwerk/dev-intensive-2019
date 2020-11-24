@@ -1,15 +1,21 @@
 package ru.skillbranch.devintensive
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.skillbranch.devintensive.extensions.hideKeyboard
+import ru.skillbranch.devintensive.extensions.onAction
+import ru.skillbranch.devintensive.extensions.toEditable
 import ru.skillbranch.devintensive.models.Bender
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -32,12 +38,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+        val text = savedInstanceState?.getString("TEXT") ?: ""
         benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
 
         Log.d("M_MainActivity", "onCreate $status $question")
         val (r, g, b) = benderObj.status.color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
 
+        messageEt.text = text.toEditable()
+        messageEt.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        messageEt.onAction(EditorInfo.IME_ACTION_DONE) {
+            checkAnswer()
+        }
         textTxt.text = benderObj.askQuestion()
         sendBtn.setOnClickListener(this)
     }
@@ -77,6 +89,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
+        outState?.putString("TEXT", messageEt.text.toString())
         Log.d(
             "M_MainActivity",
             "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}"
@@ -85,11 +98,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send) {
-            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
-            messageEt.setText("")
-            val (r, g, b) = color
-            benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
-            textTxt.text = phrase
+            checkAnswer()
         }
+    }
+
+    private fun checkAnswer() {
+        val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+        messageEt.setText("")
+        val (r, g, b) = color
+        benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
+        textTxt.text = phrase
+        this.hideKeyboard()
     }
 }

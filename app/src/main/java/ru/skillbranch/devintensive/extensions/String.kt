@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.extensions
 
+import android.text.Editable
+
 const val FILLER = "..."
 
 fun String.truncate(size: Int = 16): String{
@@ -11,3 +13,5 @@ fun String.stripHtml(): String{
     val re2 = Regex("\\s{2,}")
     return this.replace(re,"").replace(re2," ")
 }
+
+fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)

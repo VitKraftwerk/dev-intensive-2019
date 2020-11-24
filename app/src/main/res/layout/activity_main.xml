@@ -38,6 +38,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:hint="Введите текст"
+                android:inputType="text"
                 android:lines="1"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
