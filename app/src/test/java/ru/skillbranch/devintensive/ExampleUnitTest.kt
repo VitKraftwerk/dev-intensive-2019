@@ -96,4 +96,27 @@ class ExampleUnitTest {
         println("<p class=\"title\">Образовательное IT-сообщество Skill Branch</p>".stripHtml()) //Образовательное IT-сообщество Skill Branch
         println("<p>Образовательное       IT-сообщество Skill Branch</p>".stripHtml()) //Образовательное IT-сообщество Skill Branch
     }
+
+    @Test
+    fun test_validateRepository() {
+        val tests = listOf(
+            "https://github.com/johnDoe", //валиден
+            "https://www.github.com/johnDoe", //валиден
+            "www.github.com/johnDoe", //валиден
+            "github.com/johnDoe", //валиден
+            "https://anyDomain.github.com/johnDoe", //невалиден
+            "https://github.com/", //невалиден
+            "https://github.com", //невалиден
+            "https://github.com/johnDoe/tree", //невалиден
+            "https://github.com/johnDoe/tree/something", //невалиден
+            "https://github.com/enterprise", //невалиден
+            "https://github.com/pricing", //невалиден
+            "https://github.com/join" //невалиден
+        )
+
+        for (test in tests) {
+            print("$test - ")
+            println(Profile.validateRepository(test))
+        }
+    }
 }

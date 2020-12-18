@@ -2,8 +2,8 @@ package ru.skillbranch.devintensive.ui.custom
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Rect
-import android.graphics.drawable.Drawable
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
@@ -32,36 +32,55 @@ class CircleImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
     companion object {
-        private const val DEFAULT_DIMENSION = 2
-        private const val DEFAULT_COLOR = 0
+        private const val DEFAULT_DIMENSION = 1f
+        private const val DEFAULT_COLOR = Color.WHITE
     }
 
-    private var borderWidth: Int = DEFAULT_DIMENSION
+    private var borderWidth: Float = DEFAULT_DIMENSION
     private var color: Int = DEFAULT_COLOR
 
     init{
         if(attrs!= null){
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
-            borderWidth = a.getInt(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_DIMENSION)
+            borderWidth = a.getDimension(
+                R.styleable.CircleImageView_cv_borderWidth,
+                DEFAULT_DIMENSION
+            )
             color= a.getInt(R.styleable.CircleImageView_cv_borderColor, DEFAULT_COLOR)
             a.recycle()
         }
     }
 
-    @Dimension fun getBorderWidth() : Int = borderWidth
+    @Dimension fun getBorderWidth() : Float = borderWidth
 
-    fun setBorderWidth(@Dimension dp:Int) {
+    fun setBorderWidth(@Dimension dp: Float) {
         borderWidth = dp
     }
 
     fun getBorderColor():Int = color
 
-    fun setBorderColor(hex:String) {
-        color = parseInt("ED05265A", 16)
+    fun setBorderColor(hex: String) {
+        color = parseInt(hex, 16)
     }
 
     fun setBorderColor(@ColorRes colorId: Int) {
         color = colorId
     }
 
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        val w = width
+        val h = height
+
+        var paint = Paint()
+        val radius = w / 2 - borderWidth / 2
+
+        paint.setStyle(Paint.Style.STROKE)
+        paint.setStrokeWidth(borderWidth);
+        paint.setColor(color)
+
+        canvas!!.drawCircle( w / 2f, h / 2f, radius, paint)
+
+    }
 }
