@@ -12,7 +12,7 @@ object PreferencesRepository {
     private const val LAST_NAME = "LAST_NAME"
     private const val ABOUT = "ABOUT"
     private const val REPOSITORY = "REPOSITORY"
-    private const val RAITING = "RAITING"
+    private const val RATING = "RATING"
     private const val RESPECT = "RESPECT"
     private const val APP_THEME = "APP_THEME"
 
@@ -33,7 +33,7 @@ object PreferencesRepository {
             putValue(LAST_NAME to lastName)
             putValue(ABOUT to about)
             putValue(REPOSITORY to repository)
-            putValue(RAITING to rating)
+            putValue(RATING to rating)
             putValue(RESPECT to respect)
 
         }
@@ -44,7 +44,7 @@ object PreferencesRepository {
         prefs.getString(LAST_NAME, "")!!,
         prefs.getString(ABOUT, "")!!,
         prefs.getString(REPOSITORY, "")!!,
-        prefs.getInt(RAITING, 0),
+        prefs.getInt(RATING, 0),
         prefs.getInt(RESPECT, 0)
      )
 

@@ -92,7 +92,7 @@
 
             <TextView
                     style="@style/Profile.Metrics.Value"
-                    android:id="@+id/tv_raiting"
+                    android:id="@+id/tv_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_sp_24"
@@ -252,6 +252,7 @@
                 android:src="@drawable/ic_repo" />
 
         <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wr_repository"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_normal_16"

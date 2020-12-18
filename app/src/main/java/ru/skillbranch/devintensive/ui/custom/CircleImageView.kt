@@ -32,11 +32,11 @@ class CircleImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
     companion object {
-        private const val DEFAULT_DIMENSION = 1f
+        private const val DEFAULT_DIMENSION = 1
         private const val DEFAULT_COLOR = Color.WHITE
     }
 
-    private var borderWidth: Float = DEFAULT_DIMENSION
+    private var borderWidth: Int = DEFAULT_DIMENSION
     private var color: Int = DEFAULT_COLOR
 
     init{
@@ -44,16 +44,16 @@ class CircleImageView @JvmOverloads constructor(
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
             borderWidth = a.getDimension(
                 R.styleable.CircleImageView_cv_borderWidth,
-                DEFAULT_DIMENSION
-            )
+                DEFAULT_DIMENSION.toFloat()
+            ).toInt()
             color= a.getInt(R.styleable.CircleImageView_cv_borderColor, DEFAULT_COLOR)
             a.recycle()
         }
     }
 
-    @Dimension fun getBorderWidth() : Float = borderWidth
+    @Dimension fun getBorderWidth() : Int = borderWidth
 
-    fun setBorderWidth(@Dimension dp: Float) {
+    fun setBorderWidth(@Dimension dp: Int) {
         borderWidth = dp
     }
 
@@ -74,10 +74,10 @@ class CircleImageView @JvmOverloads constructor(
         val h = height
 
         var paint = Paint()
-        val radius = w / 2 - borderWidth / 2
+        val radius = w / 2f - borderWidth / 2f
 
         paint.setStyle(Paint.Style.STROKE)
-        paint.setStrokeWidth(borderWidth);
+        paint.setStrokeWidth(borderWidth.toFloat());
         paint.setColor(color)
 
         canvas!!.drawCircle( w / 2f, h / 2f, radius, paint)
