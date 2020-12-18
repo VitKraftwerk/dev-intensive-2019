@@ -123,11 +123,21 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveProfileInfo(){
+
+        var repository = et_repository.text.toString()
+
+        if(!Profile.validateRepository(repository)) {
+            wr_repository.error = "Невалидный адрес репозитория"
+            repository = ""
+        } else {
+            wr_repository.error = null
+        }
+
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
-            repository = et_repository.text.toString()
+            repository = repository
         ).apply {
             viewModel.saveProfileDate(this)
         }

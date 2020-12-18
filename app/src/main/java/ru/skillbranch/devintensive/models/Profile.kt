@@ -16,11 +16,13 @@ data class Profile (
 
     companion object {
         fun validateRepository(value: String): Boolean{
-            var repository = value
+            var repository = value.trim()
             val exclude = listOf("enterprise", "features", "topics", "collections", "trending", "events", "marketplace", "pricing", "nonprofit", "customer-stories", "security", "login", "join")
             val domain = listOf("github.com", "www.github.com")
 
             if (repository.isEmpty()) return true
+
+            if (repository == "https://" || repository == "http://") return false
 
             if (!repository.startsWith("https://") && !repository.startsWith("http://")) {
                 repository = "http://$repository"
