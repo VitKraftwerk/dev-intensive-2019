@@ -34,7 +34,7 @@ data class Profile (
 
             val paths = url.path.split('/').toList().filter { x -> x.isNotEmpty() }
 
-            if(paths == null || paths.size != 1) return false
+            if(paths.size != 1) return false
 
             if(exclude.contains(paths[0].toLowerCase())) return false
 
